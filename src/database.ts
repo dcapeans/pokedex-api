@@ -1,4 +1,5 @@
 import { getConnectionManager } from "typeorm";
+import "./setup"
 
 if (process.env.NODE_ENV === 'production' && process.env.DATABASE_URL.indexOf("sslmode=require") === -1) {
   process.env.DATABASE_URL += "?sslmode=require";

@@ -7,12 +7,14 @@ import "reflect-metadata";
 import connectDatabase from "./database";
 
 import * as userController from "./controllers/userConroller";
+import * as userMiddleware from './middlewares/userMiddleware'
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
 app.get("/users", userController.getUsers);
+app.post("/sign-up", userMiddleware.authSignUp, userController.signUp)
 
 export async function init () {
   await connectDatabase();

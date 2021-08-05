@@ -4,6 +4,7 @@ import { getConnection } from "typeorm";
 import app, { init } from "../../src/app";
 import { createUser } from "../factories/userFactory";
 import { clearDatabase } from "../utils/database";
+import "../../src/setup"
 
 beforeAll(async () => {
   await init();
@@ -34,3 +35,15 @@ describe("GET /users", () => {
     expect(response.status).toBe(200);
   });
 });
+
+describe("POST /sign-up", () => {
+  it("should answer with status 201", async () => {
+    const body = { email: "test@test.com", password: "123456", confirmPassword: "123456"}
+
+    const response = await supertest(app).post("/sign-up").send(body);
+
+    expect(response.status).toBe(201);
+  });
+});
+
+
