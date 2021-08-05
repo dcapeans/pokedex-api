@@ -6,7 +6,9 @@
   "scripts": {
     "test": "NODE_ENV=test npx jest -i",
     "build": "NODE_ENV=production npx tsc --outDir dist",
-    "start": "NODE_ENV=production NODE_TLS_REJECT_UNAUTHORIZED=0 node dist/server.js",
+    "start": "NODE_ENV=production NODE_TLS_REJECT_UNAUTHORIZED=0 node dist/src/server.js",
+    "database": "NODE_ENV=production NODE_TLS_REJECT_UNAUTHORIZED=0 node dist/src/dbScript.js",
+    "typeorm": "ts-node ./node_modules/typeorm/cli",
     "dev": "NODE_ENV=development npx nodemon --watch \"src/**\" --ext \"ts,json\" --exec \"ts-node src/server.ts\""
   },
   "keywords": [],
@@ -27,6 +29,7 @@
     "typescript": "^4.3.5"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",

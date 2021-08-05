@@ -1,0 +1,26 @@
+import {MigrationInterface, QueryRunner} from "typeorm";
+
+export class CreateTablesUsersAndPokemons1628194628156 implements MigrationInterface {
+    name = 'CreateTablesUsersAndPokemons1628194628156'
+
+    public async up(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.query(`CREATE TABLE "pokemons" ("id" SERIAL NOT NULL, "name" character varying NOT NULL, "number" character varying NOT NULL, "weight" character varying NOT NULL, "height" character varying NOT NULL, "base_exp" character varying NOT NULL, "image" character varying NOT NULL, "description" character varying NOT NULL, "in_my_pokemons" boolean NOT NULL, CONSTRAINT "PK_a3172290413af616d9cfa1fdc9a" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE TABLE "users" ("id" SERIAL NOT NULL, "email" character varying NOT NULL, "password" character varying NOT NULL, CONSTRAINT "PK_a3ffb1c0c8416b9fc6f907b7433" PRIMARY KEY ("id"))`);
+        await queryRunner.query(`CREATE TABLE "users_pokemons" ("usersId" integer NOT NULL, "pokemonsId" integer NOT NULL, CONSTRAINT "PK_f4bc246eaef14b3a2af7f2d16b3" PRIMARY KEY ("usersId", "pokemonsId"))`);
+        await queryRunner.query(`CREATE INDEX "IDX_347130834a95292bc92f95eda1" ON "users_pokemons" ("usersId") `);
+        await queryRunner.query(`CREATE INDEX "IDX_186672f1f8a7bc81e034438415" ON "users_pokemons" ("pokemonsId") `);
+        await queryRunner.query(`ALTER TABLE "users_pokemons" ADD CONSTRAINT "FK_347130834a95292bc92f95eda15" FOREIGN KEY ("usersId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE`);
+        await queryRunner.query(`ALTER TABLE "users_pokemons" ADD CONSTRAINT "FK_186672f1f8a7bc81e034438415d" FOREIGN KEY ("pokemonsId") REFERENCES "pokemons"("id") ON DELETE CASCADE ON UPDATE CASCADE`);
+    }
+
+    public async down(queryRunner: QueryRunner): Promise<void> {
+        await queryRunner.query(`ALTER TABLE "users_pokemons" DROP CONSTRAINT "FK_186672f1f8a7bc81e034438415d"`);
+        await queryRunner.query(`ALTER TABLE "users_pokemons" DROP CONSTRAINT "FK_347130834a95292bc92f95eda15"`);
+        await queryRunner.query(`DROP INDEX "IDX_186672f1f8a7bc81e034438415"`);
+        await queryRunner.query(`DROP INDEX "IDX_347130834a95292bc92f95eda1"`);
+        await queryRunner.query(`DROP TABLE "users_pokemons"`);
+        await queryRunner.query(`DROP TABLE "users"`);
+        await queryRunner.query(`DROP TABLE "pokemons"`);
+    }
+
+}
