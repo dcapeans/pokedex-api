@@ -27,3 +27,8 @@ export async function createSession(userId:number, token: string) {
       ])
       .execute();
 }
+
+export async function getSession(token: string){
+  const session = await getRepository(Session).find({ where: {token: token}})
+  return session
+}
