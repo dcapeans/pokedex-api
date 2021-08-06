@@ -29,7 +29,6 @@ export async function authSignIn(req: Request, res: Response, next: NextFunction
   const foundUser = await userService.getUserByEmail(req.body.email);
   
   if (foundUser.length === 0 || !bcrypt.compareSync(req.body.password, foundUser[0].password)) {
-    console.log("entrou")
     return res.sendStatus(401);
   }
   next()

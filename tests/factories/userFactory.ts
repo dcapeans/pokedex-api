@@ -2,6 +2,8 @@ import { getRepository } from "typeorm";
 import bcrypt from 'bcrypt'
 
 import User from "../../src/entities/User";
+import { v4 as uuidv4 } from "uuid";
+import * as userService from "../../src/services/userService";
 
 export async function createUser () {
   const password = "123456"
@@ -14,4 +16,10 @@ export async function createUser () {
   await getRepository(User).save(user);
 
   return user;
+}
+
+export async function createSession(){
+  const token = uuidv4()
+  await userService.createSession(1, token)
+  return token
 }
