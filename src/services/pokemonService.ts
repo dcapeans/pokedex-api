@@ -27,10 +27,22 @@ export async function addPokemonForUser(token: string, pokemonId: number){
         .add(pokemon);
 }
 
+export async function removePokemonForUser(token: string, pokemonId: number){
+    const session = await userService.getSession(token)
+    const user = await userService.getUserById(session[0].user_id)
+
+    const pokemon = await getPokemonById(pokemonId)
+
+    await getConnection()
+        .createQueryBuilder()
+        .relation(User, "pokemons")
+        .of(user)
+        .remove(pokemon);
+}
+
 export async function checkIfUserHasPokemon(token:string){
     const session = await userService.getSession(token)
     const userPokemons = await getRepository(User).find({ where: {id: session[0].user_id}, relations: ["pokemons"]})
     const userPokemonsId = userPokemons[0].pokemons.map(p => p.id)
-    console.log(userPokemonsId)
     return userPokemonsId
 }

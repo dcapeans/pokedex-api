@@ -3,7 +3,7 @@ import { getConnection } from "typeorm";
 
 import app, { init } from "../../src/app";
 import { createUser, createSession } from "../factories/userFactory";
-import { clearDatabase } from "../utils/database";
+import { clearDatabase, addPokemonForUser } from "../utils/database";
 import "../../src/setup"
 
 beforeAll(async () => {
@@ -20,8 +20,7 @@ afterAll(async () => {
 
 describe("GET /pokemons", () => {
     it("should answer with array of pokemons objects and status 200", async () => {
-      const token = await createSession();
-  
+      const token = await addPokemonForUser();
       const response = await supertest(app).get("/pokemons").set("Authorization", `Bearer ${token}`);;
       
       expect(response.body).toEqual(
@@ -41,4 +40,20 @@ describe("GET /pokemons", () => {
       );
       expect(response.status).toBe(200);
     });
+    it("should answer with status 401 for invalid token", async () => {
+      const token = "token123456"
+      const response = await supertest(app).post("/sign-in").set("Authorization", `Bearer ${token}`);
+  
+      expect(response.status).toBe(401);
+    });
+});
+
+describe("GET /my-pokemons/:id/add", () => {
+  it("should answer with status 200", async () => {
+    const token = await addPokemonForUser();
+
+    const response = await supertest(app).get("/pokemons").set("Authorization", `Bearer ${token}`);
+    
+    expect(response.status).toBe(200);
   });
+});

@@ -7,7 +7,7 @@ export async function catchThemAll (req: Request, res: Response) {
         const pokemons = await pokemonService.getPokemons()
         const token = req.headers['authorization']?.replace("Bearer ", "")
         const hasPokemon = await pokemonService.checkIfUserHasPokemon(token)
-        
+
         const parsePokemons: any[] = pokemons.map(p => (
             {
                 id: p.id,
@@ -34,6 +34,19 @@ export async function catchPokemon(req: Request, res: Response){
         const token = req.headers['authorization']?.replace("Bearer ", "")
 
         await pokemonService.addPokemonForUser(token, pokemonId)
+        res.send(200)
+    } catch (error) {
+        console.log(error)
+        res.sendStatus(500)
+    }
+}
+
+export async function removePokemon(req: Request, res: Response){
+    try {
+        const pokemonId = +req.params.id
+        const token = req.headers['authorization']?.replace("Bearer ", "")
+
+        await pokemonService.removePokemonForUser(token, pokemonId)
         res.send(200)
     } catch (error) {
         console.log(error)

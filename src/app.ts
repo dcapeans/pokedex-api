@@ -21,6 +21,7 @@ app.post("/sign-in", userMiddleware.authSignIn, userController.signIn)
 
 app.get("/pokemons", pokemonMiddleware.validateToken, pokemonController.catchThemAll)
 app.post("/my-pokemons/:id/add", pokemonMiddleware.validateToken, pokemonController.catchPokemon)
+app.post("/my-pokemons/:id/remove", pokemonMiddleware.validateToken, pokemonController.removePokemon)
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   console.log(err)
