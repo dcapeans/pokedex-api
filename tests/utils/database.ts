@@ -20,5 +20,7 @@ export async function addPokemonForUser(){
       .relation(User, "pokemons")
       .of(user)
       .add(pokemon);
+  
+  return token
 }
 
