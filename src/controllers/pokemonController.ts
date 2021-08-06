@@ -7,7 +7,6 @@ export async function catchThemAll (req: Request, res: Response) {
         const pokemons = await pokemonService.getPokemons()
         const token = req.headers['authorization']?.replace("Bearer ", "")
         const hasPokemon = await pokemonService.checkIfUserHasPokemon(token)
-
         const parsePokemons: any[] = pokemons.map(p => (
             {
                 id: p.id,
@@ -18,7 +17,7 @@ export async function catchThemAll (req: Request, res: Response) {
                 baseExp: p.base_exp,
                 image: p.image,
                 description: p.description,
-                inMyPokemons: hasPokemon.includes(p.id)
+                inMyPokemons: hasPokemon ? hasPokemon.includes(p.id) : false
             }
         ))
         res.send(parsePokemons).status(200)

@@ -42,7 +42,8 @@ export async function removePokemonForUser(token: string, pokemonId: number){
 
 export async function checkIfUserHasPokemon(token:string){
     const session = await userService.getSession(token)
+    
     const userPokemons = await getRepository(User).find({ where: {id: session[0].user_id}, relations: ["pokemons"]})
-    const userPokemonsId = userPokemons[0].pokemons.map(p => p.id)
+    const userPokemonsId = userPokemons[0]?.pokemons.map(p => p.id)
     return userPokemonsId
 }

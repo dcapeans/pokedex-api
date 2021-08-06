@@ -41,8 +41,8 @@ describe("GET /pokemons", () => {
       expect(response.status).toBe(200);
     });
     it("should answer with status 401 for invalid token", async () => {
-      const token = "token123456"
-      const response = await supertest(app).post("/sign-in").set("Authorization", `Bearer ${token}`);
+      await addPokemonForUser();
+      const response = await supertest(app).get("/pokemons").set("Authorization", `Bearer 123`);
   
       expect(response.status).toBe(401);
     });
