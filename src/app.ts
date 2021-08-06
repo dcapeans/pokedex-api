@@ -9,6 +9,7 @@ import connectDatabase from "./database";
 import * as userController from "./controllers/userController";
 import * as pokemonController from "./controllers/pokemonController";
 import * as userMiddleware from './middlewares/userMiddleware'
+import * as pokemonMiddleware from './middlewares/pokemonMiddleware'
 
 const app = express();
 app.use(cors());
@@ -18,7 +19,8 @@ app.get("/users", userController.getUsers);
 app.post("/sign-up", userMiddleware.authSignUp, userController.signUp)
 app.post("/sign-in", userMiddleware.authSignIn, userController.signIn)
 
-app.get("/pokemons", pokemonController.catchThemAll)
+app.get("/pokemons", pokemonMiddleware.validateToken, pokemonController.catchThemAll)
+app.post("/my-pokemons/:id/add", pokemonMiddleware.validateToken, pokemonController.catchPokemon)
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   console.log(err)

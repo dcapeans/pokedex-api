@@ -1,15 +1,9 @@
 import { Request, Response } from "express";
 
-import * as userService from "../services/userService";
 import * as pokemonService from "../services/pokemonService";
 
 export async function catchThemAll (req: Request, res: Response) {
-    try {
-        const token = req.headers['authorization']?.replace("Bearer ", "")
-        const session = await userService.getSession(token) 
-        
-        if(!token || !session) return res.sendStatus(401)
-        
+    try {        
         const pokemons = await pokemonService.getPokemons()
         const parsePokemons: any[] = pokemons.map(p => (
             {
@@ -25,6 +19,18 @@ export async function catchThemAll (req: Request, res: Response) {
             }
         ))
         res.send(parsePokemons).status(200)
+    } catch (error) {
+        console.log(error)
+        res.sendStatus(500)
+    }
+}
+
+export async function catchPokemon(req: Request, res: Response){
+    try {
+        const pokemonId = +req.params.id
+        const token = req.headers['authorization']?.replace("Bearer ", "")
+
+        await pokemonService.addPokemonForUser(token, pokemonId)
     } catch (error) {
         console.log(error)
         res.sendStatus(500)

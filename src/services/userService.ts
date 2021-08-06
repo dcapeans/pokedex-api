@@ -14,7 +14,12 @@ export async function getUsers () {
 
 export async function getUserByEmail(email:string) {
   const user = await getRepository(User).find({ where: {email: email}})
-  return user
+  return user[0]
+}
+
+export async function getUserById(id:number) {
+  const user = await getRepository(User).find({ where: {id: id}})
+  return user[0]
 }
 
 export async function createSession(userId:number, token: string) {

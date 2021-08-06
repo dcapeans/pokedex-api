@@ -41,8 +41,7 @@ export async function signUp (req: Request, res: Response) {
 export async function signIn (req: Request, res: Response){
   try {
     const { email } = req.body
-    const result = await userService.getUserByEmail(email)
-    const user = result[0]
+    const user = await userService.getUserByEmail(email) 
 
     const session = await getRepository(Session).find({ where: {user_id: user.id}})
     const activeSession = session[0]
