@@ -31,6 +31,7 @@ export async function catchPokemon(req: Request, res: Response){
         const token = req.headers['authorization']?.replace("Bearer ", "")
 
         await pokemonService.addPokemonForUser(token, pokemonId)
+        res.send(200)
     } catch (error) {
         console.log(error)
         res.sendStatus(500)
