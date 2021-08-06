@@ -1,5 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToMany, JoinTable } from "typeorm";
-import Pokemon from '../entities/Pokemon'
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import User from './User'
 
 @Entity("sessions")
 export default class Session {
@@ -11,4 +11,7 @@ export default class Session {
 
   @Column()
   token: string;
+  
+  @ManyToOne(() => User, user => user.sessions)
+  user: User;
 }
