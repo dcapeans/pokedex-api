@@ -26,3 +26,9 @@ export async function addPokemonForUser(token: string, pokemonId: number){
         .of(user)
         .add(pokemon);
 }
+
+export async function checkIfUserHasPokemon(token:string){
+    const session = await userService.getSession(token)
+    const userPokemons = await getRepository(User).find({ where: {id: session[0].user_id}, relations: ["pokemons"]})
+    console.log(userPokemons)
+}

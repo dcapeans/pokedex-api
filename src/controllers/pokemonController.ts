@@ -5,6 +5,9 @@ import * as pokemonService from "../services/pokemonService";
 export async function catchThemAll (req: Request, res: Response) {
     try {        
         const pokemons = await pokemonService.getPokemons()
+        const token = req.headers['authorization']?.replace("Bearer ", "")
+        const hasPokemon = await pokemonService.checkIfUserHasPokemon(token)
+        
         const parsePokemons: any[] = pokemons.map(p => (
             {
                 id: p.id,
