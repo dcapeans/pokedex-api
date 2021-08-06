@@ -21,7 +21,7 @@ export async function createSession(userId:number, token: string) {
   await getConnection()
       .createQueryBuilder()
       .insert()
-      .into('sessions')
+      .into(Session)
       .values([
           { user_id: userId, token: token }
       ])

@@ -5,12 +5,12 @@
   "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=test npx jest -i",
-    "build": "NODE_ENV=production npx tsc --outDir dist",
+    "build": "NODE_ENV=production npx tsc --outDir dist && npm run migration:run",
     "start": "NODE_ENV=production NODE_TLS_REJECT_UNAUTHORIZED=0 node dist/src/server.js",
-    "postinstall": "npm run build",
     "database": "NODE_ENV=production NODE_TLS_REJECT_UNAUTHORIZED=0 node dist/src/dbScript.js",
     "typeorm": "ts-node ./node_modules/typeorm/cli",
-    "dev": "NODE_ENV=development npx nodemon --watch \"src/**\" --ext \"ts,json\" --exec \"ts-node src/server.ts\""
+    "dev": "NODE_ENV=development npx nodemon --watch \"src/**\" --ext \"ts,json\" --exec \"ts-node src/server.ts\"",
+    "migration:run": "npm run typeorm -- migration:run"
   },
   "keywords": [],
   "author": "",
