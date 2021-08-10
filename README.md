@@ -33,7 +33,13 @@ The following tools and frameworks were used in the construction of the project:
 ```bash
 npm i
 ```
-5. Run the back-end with
+5. Create a PostgresSQL database "your_database_dev"
+6. Create a .env file and config it with your database URL
+7. Create tables and seed the database, it may take a couple minutes to seed
+```bash
+npm run seed-db
+```
+8. Run the back-end with
 ```bash
 npm run dev
 ```
