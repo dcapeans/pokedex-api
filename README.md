@@ -2,6 +2,10 @@
 
 A simple pokedex app for looking pokemon info and adding them to your own team.
 
+<p align="center">
+  <img src="assets/pokedex.gif">
+</p>
+
 Try it out now at https://pokedex-front.vercel.app/
 
 Below are the implemented features:
