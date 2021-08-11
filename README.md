@@ -16,6 +16,7 @@ Below are the implemented features:
 - Show individual pokemon information
 - Add pokemon to your team
 - Remove pokemon from your team
+- List your pokemons
 
 ## Technologies
 The following tools and frameworks were used in the construction of the project:<br>
